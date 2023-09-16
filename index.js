@@ -47,28 +47,53 @@ parseButton.addEventListener('click', function() {
 */
 
 let data;
-let amountOfFloors;
-let floors = 0;
 let floorData = [];
+let maxFloors = 0;
 
+// Fetch the CSV data and process it
 fetch('Dataset_-_CBRE_Challenge_-_HackSMU_2023.csv')
     .then(response => response.text())
     .then(csvData => {
-        data = csvData; // Assign the fetched CSV data to the outer 'data' variable
+        data = csvData;
         const rows = data.split('\n');
-        for(let row of rows) {
+        for (let row of rows) {
             const rowData = row.split(',');
-            console.log(rowData); // This will give you an array of columns in the row
+            console.log(rowData);
             floorData.push(rowData);
-        }
-
-        // Now you can use 'data' here or perform any other operations
-        for (let i = 1; i < floorData.length; i++) {
-            if ([i][3] > floors){
-                floors = rowData[i][3];
-                console.log(floors);
+            const floors = parseInt(rowData[2], 10);
+            if (!isNaN(floors) && floors > maxFloors) {
+                maxFloors = floors;
             }
         }
-        console.log(floors)
+
+        console.log('Maximum number of floors:', maxFloors);
+
+        // After fetching and processing the data, create the HTML elements
+        createFloorContainers(floorData, maxFloors);
     })
     .catch(error => console.error('Error fetching the CSV file:', error));
+
+function createFloorContainers(floorData, maxFloors) {
+    let container = document.getElementById("overall-content");
+
+    // Loop through the floor numbers
+    for (let i = 1; i <= maxFloors; i++) {
+        let rowContainer = document.createElement('div');
+        rowContainer.classList.add('row');
+        rowContainer.classList.add('border');
+
+
+        // Loop through the data to find matching floor numbers
+        for (let j = 1; j < floorData.length; j++) {
+            if (parseInt(floorData[j][2], 10) === i) {
+                let cell = document.createElement('div');
+                cell.classList.add('col-12')
+                cell.textContent = floorData[j].join(', '); // Display all columns in the row
+                rowContainer.appendChild(cell);
+            }
+        }
+
+        container.appendChild(rowContainer);
+    }
+}
+
