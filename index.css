@@ -1,0 +1,12 @@
+.nav-link
+{
+    color: blue;
+}
+
+nav {
+    background-color: #0b3995;
+    color: white;
+    padding: 10px;
+    border-bottom: 2px solid #ddd; /* Add a 2px solid border to the bottom of the navbar */
+}
+
