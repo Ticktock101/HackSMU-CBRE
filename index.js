@@ -105,9 +105,8 @@ function createFloorContainers(floorData, maxFloors) {
         linkTitle.setAttribute("data-bs-target", ".content");
         linkTitle.setAttribute("onclick", "rotateArrow(event)");
 
-
-        titleCol.appendChild(linkTitle);
         titleCol.appendChild(linkImg);
+        titleCol.appendChild(linkTitle);
 
         rowContainer.appendChild(titleCol);
 
