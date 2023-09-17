@@ -49,6 +49,7 @@ parseButton.addEventListener('click', function() {
 let data;
 let floorData = [];
 let maxFloors = 0;
+let numEachFloor = [];
 
 // Fetch the CSV data and process it
 fetch('Dataset_-_CBRE_Challenge_-_HackSMU_2023.csv')
@@ -81,19 +82,67 @@ function createFloorContainers(floorData, maxFloors) {
         let rowContainer = document.createElement('div');
         rowContainer.classList.add('row');
         rowContainer.classList.add('border');
+        
+        let titleCol = document.createElement('div');
+        titleCol.classList.add('col-12');
+        titleCol.classList.add('d-flex');
+        titleCol.classList.add('link-arrow');
 
+        let linkTitle = document.createElement('a');
+        linkTitle.setAttribute("href", "#");
+        linkTitle.classList.add('expand-link');
+        linkTitle.classList.add('h1');
+        linkTitle.setAttribute("data-bs-toggle", "collapse");
+        linkTitle.setAttribute("data-bs-target", ".content");
+        linkTitle.setAttribute("onclick", "rotateArrow(event)");
+        linkTitle.textContent = "Floor " + i;
+
+        let linkImg = document.createElement("img");
+        linkImg.setAttribute('src', 'C:\Users\omkar\OneDrive\Documents\GitHub\HackSMU-CBRE\Images\arrow-removebg-preview.png');
+        linkImg.classList.add('expand-link');
+        linkImg.classList.add("arrow-image");
+        linkImg.setAttribute("data-bs-toggle", "collapse");
+        linkTitle.setAttribute("data-bs-target", ".content");
+        linkTitle.setAttribute("onclick", "rotateArrow(event)");
+
+
+        titleCol.appendChild(linkTitle);
+        titleCol.appendChild(linkImg);
+
+        rowContainer.appendChild(titleCol);
+
+
+        // Create a table for each floor
+        let table = document.createElement('table');
+        table.classList.add('table'); // You can add Bootstrap classes for styling if needed
+        let tableBody = document.createElement('tbody');
 
         // Loop through the data to find matching floor numbers
         for (let j = 1; j < floorData.length; j++) {
             if (parseInt(floorData[j][2], 10) === i) {
-                let cell = document.createElement('div');
-                cell.classList.add('col-12')
-                cell.textContent = floorData[j].join(', '); // Display all columns in the row
-                rowContainer.appendChild(cell);
+                let rowData = floorData[j];
+                let row = document.createElement('tr');
+
+                // Loop through the columns and create table cells
+                for (let k = 1; k < rowData.length; k++) {
+                    let cell = document.createElement('td');
+                    cell.textContent = rowData[k];
+                    row.appendChild(cell);
+                }
+
+                tableBody.appendChild(row);
             }
         }
 
+        table.appendChild(tableBody);
+        rowContainer.appendChild(table);
         container.appendChild(rowContainer);
     }
 }
 
+function rotateArrow(event) {
+    event.preventDefault();
+  
+    var arrowImage = document.querySelector('.arrow-image');
+    arrowImage.classList.toggle('rotate-arrow');
+  }

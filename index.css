@@ -1,10 +1,10 @@
 .nav-link
 {
-    color: blue; !important
+    color: rgb(30, 219, 187); 
 }
 
 nav {
-    background-color: #0b3995; 
+    background-color: #0b3995;
     color: white;
     padding: 10px;
     border-bottom: 2px solid #ddd; /* Add a 2px solid border to the bottom of the navbar */
@@ -14,19 +14,15 @@ nav {
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
-    
   }
   /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1; 
-   
   }
-  
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #888; 
   }
-  
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
